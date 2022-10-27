@@ -1,6 +1,6 @@
 import random
 import string
-
+import sys
 import urllib3
 
 from prepare_data_common import __generate_random_string, __write_to_file
@@ -150,7 +150,7 @@ def __get_users(jira_api):
 def __get_software_projects(jira_api):
     all_projects = jira_api.get_all_projects()
     software_projects = \
-        [f"{project['key']},{project['id']}" for project in all_projects if 'software' == project.get('projectTypeKey')]
+        [f"{project['key']},{project['id']}" for project in all_projects if 'software' == project.get('projectTypeKey') and sys.argv[1] in project['key']]
     if not software_projects:
         raise SystemExit(
             f"There are no software projects in Jira accessible by a random performance user: {jira_api.user}")
