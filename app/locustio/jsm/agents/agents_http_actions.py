@@ -51,7 +51,7 @@ def agent_login_and_view_dashboard(locust, jsm_agent_dataset):
     body['os_username'] = user[0]
     body['os_password'] = user[1]
 
-    locust.post('/login.jsp', body, TEXT_HEADERS, catch_response=True)
+    locust.post('/login.jsp?nosso', body, TEXT_HEADERS, catch_response=True)
     r = locust.get('/', catch_response=True)
     if not r.content:
         raise Exception('Please check server hostname in jsm.yml file')

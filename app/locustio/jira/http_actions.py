@@ -26,8 +26,8 @@ def login_and_view_dashboard(locust):
     body['os_username'] = user[0]
     body['os_password'] = user[1]
 
-    # 100 /login.jsp
-    locust.post('/login.jsp', body,
+    # 100 /login.jsp?nosso
+    locust.post('/login.jsp?nosso', body,
                 TEXT_HEADERS,
                 catch_response=True)
 

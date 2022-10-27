@@ -13,7 +13,7 @@ class UrlManager:
     def __init__(self, issue_key=None, issue_id=None, project_key=None, jql=None, projects_list_page=None,
                  board_id=None):
         self.host = JIRA_SETTINGS.server_url
-        self.login_params = '/login.jsp'
+        self.login_params = '/login.jsp?nosso'
         self.logout_params = '/logoutconfirm.jsp'
         self.dashboard_params = '/secure/Dashboard.jspa'
         self.issue_params = f"/browse/{issue_key}"

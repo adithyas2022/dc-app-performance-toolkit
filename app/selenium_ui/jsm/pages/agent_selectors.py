@@ -16,7 +16,7 @@ class UrlManager:
     def __init__(self, project_key=None, request_key=None, queue_id=None, custom_report_id=None,
                  insight_issues=None, schema_id=None):
         self.host = JSM_SETTINGS.server_url
-        self.login_params = '/login.jsp'
+        self.login_params = '/login.jsp?nosso'
         self.logout_params = '/logoutconfirm.jsp'
         self.dashboard_params = '/secure/Dashboard.jspa'
         self.browse_all_projects = '/secure/BrowseProjects.jspa?selectedProjectType=service_desk'

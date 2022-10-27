@@ -181,7 +181,7 @@ class JiraRestClient(RestClient):
         return nodes
 
     def get_system_info_page(self):
-        login_url = f'{self.host}/login.jsp'
+        login_url = f'{self.host}/login.jsp?nosso'
         auth_url = f'{self.host}/secure/admin/WebSudoAuthenticate.jspa'
         auth_body = {
             'webSudoDestination': '/secure/admin/ViewSystemInfo.jspa',
