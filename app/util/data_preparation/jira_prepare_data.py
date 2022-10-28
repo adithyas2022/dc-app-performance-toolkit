@@ -45,7 +45,7 @@ def create_perf_issues(api, project):
         raise SystemExit(f"ERROR: Unable to fetch issues from project {project}, exiting.")
     curr_issue_count = len(curr_issue)
     if not curr_issue_count:
-        for cnt in new_issue_count:
+        for cnt in range(new_issue_count):
             try:
                 api.create_issue(project=project)
             except Exception as e:
