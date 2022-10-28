@@ -163,7 +163,7 @@ class JiraRestClient(RestClient):
         """
         api_url = self._host + "/rest/api/2/issue"
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
-        payload = {"fields": {"project": {"key": project}, "issuetype":{"name":"Bug"}, "summary": "REST ye merry gentlemen."}}
+        payload = {"fields": {"project": {"key": project}, "issuetype":{"name":"Task"}, "summary": "REST ye merry gentlemen."}}
         # if application_keys is not None:
         #         payload["applicationKeys"] = application_keys
         response = self.post(api_url, "Could not create issue", body=payload)
