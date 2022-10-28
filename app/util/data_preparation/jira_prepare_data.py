@@ -39,10 +39,11 @@ performance_users_count = 1000 if JIRA_SETTINGS.concurrency > 1000 else JIRA_SET
 def create_perf_issues(api, project):
     ## Get existing issues
     try:
-        issues = api.issues_search(jql=f"project == '{project}') AND status != Closed order by key", max_results=8000)
-        print(issues)
+        curr_issue = api.issues_search(jql=f"project = '{project}' AND status != Closed order by key", max_results=1000)
     except Exception as e:
-        pass
+        raise SystemExit(f"ERROR: Unable to fetch issues from project {project}, exiting.")
+    curr_issue_count = len(issues)
+    print(curr_issue_count)
 
 def generate_perf_users(cur_perf_user, api):
     errors_count = 0
@@ -102,7 +103,7 @@ def __create_data_set(jira_api):
     dataset[SCRUM_BOARDS] = __get_boards(perf_user_api, 'scrum')
     dataset[KANBAN_BOARDS] = __get_boards(perf_user_api, 'kanban')
     dataset[JQLS] = __generate_jqls(count=150)
-    ## Create users
+    ## Create issues
     create_perf_issues(jira_api, spec_project)
     print(f'Users count: {len(dataset[USERS])}')
     print(f'Projects: {len(dataset[PROJECTS])}')
