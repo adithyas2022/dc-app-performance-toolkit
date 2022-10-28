@@ -157,16 +157,20 @@ class JiraRestClient(RestClient):
 
         return response.json()
 
-    def create_issue(self, project, application_keys=None):
+    def create_issue(self, project):
         """
         Creates an issue in the project
         """
+        ## Get current user
+        session_url = self._host + "/rest/auth/latest/session"
+        response = self.get(session_url, "Could not get session info when\
+            creating issues")
+        print(response["name"])
+
         api_url = self._host + "/rest/api/2/issue"
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
         payload = {"fields": {"project": {"key": project}, "issuetype":{"name":"Task"}, "summary": "REST ye merry gentlemen."}}
-        # if application_keys is not None:
-        #         payload["applicationKeys"] = application_keys
-        response = self.post(api_url, "Could not create issue", body=payload)
+        response = self.post(api_url, "Could not create issue", body=payload, headers = headers)
         return response.json()
 
     def get_all_projects(self):
