@@ -157,6 +157,18 @@ class JiraRestClient(RestClient):
 
         return response.json()
 
+    def create_issue(self, project, application_keys=None):
+        """
+        Creates an issue in the project
+        """
+        api_url = self._host + "/rest/api/2/issue"
+        headers = {"Accept": "application/json", "Content-Type": "application/json"}
+        payload = {"fields": {"project": {"key": project}, "issuetype":{"name":"Bug"}, "summary": "REST ye merry gentlemen."}}
+        if application_keys is not None:
+                payload["applicationKeys"] = application_keys
+        response = self.post(api_url, "Could not create issue", body=payload)
+        return response.json()
+
     def get_all_projects(self):
         """
         :return: Returns the projects list of all project types - all categories

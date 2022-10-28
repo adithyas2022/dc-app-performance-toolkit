@@ -25,6 +25,7 @@ ERROR_LIMIT = 10
 
 ENGLISH = 'en_US'
 
+spec_project = sys.argv[1]
 
 def __generate_jqls(max_length=3, count=100):
     # Generate jqls like "abc*"
@@ -35,6 +36,10 @@ def __generate_jqls(max_length=3, count=100):
 # https://jira.atlassian.com/browse/JRASERVER-65089 User search startAt parameter is not working
 performance_users_count = 1000 if JIRA_SETTINGS.concurrency > 1000 else JIRA_SETTINGS.concurrency
 
+def create_perf_issues(api, project):
+    ## Get existing issues
+    issues = api.issues_search(jql=f"project == '{project}') AND status != Closed order by key", max_results=8000)
+    print(issues)
 
 def generate_perf_users(cur_perf_user, api):
     errors_count = 0
@@ -150,7 +155,7 @@ def __get_users(jira_api):
 def __get_software_projects(jira_api):
     all_projects = jira_api.get_all_projects()
     software_projects = \
-        [f"{project['key']},{project['id']}" for project in all_projects if 'software' == project.get('projectTypeKey') and sys.argv[1] in project['key']]
+        [f"{project['key']},{project['id']}" for project in all_projects if 'software' == project.get('projectTypeKey') and spec_project in project['key']]
     if not software_projects:
         raise SystemExit(
             f"There are no software projects in Jira accessible by a random performance user: {jira_api.user}")
