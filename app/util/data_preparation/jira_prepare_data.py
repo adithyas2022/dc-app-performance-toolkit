@@ -25,6 +25,7 @@ ERROR_LIMIT = 10
 
 ENGLISH = 'en_US'
 
+new_issue_count = 100
 spec_project = sys.argv[1]
 
 def __generate_jqls(max_length=3, count=100):
@@ -43,7 +44,12 @@ def create_perf_issues(api, project):
     except Exception as e:
         raise SystemExit(f"ERROR: Unable to fetch issues from project {project}, exiting.")
     curr_issue_count = len(curr_issue)
-    print(curr_issue_count)
+    if not curr_issue_count:
+        for cnt in new_issue_count:
+            try:
+                api.create_issue(project=project)
+            except Exception as e:
+                raise SystemExit(f"ERROR: Unable to create issues in project {project}, exiting.")
 
 def generate_perf_users(cur_perf_user, api):
     errors_count = 0
@@ -92,6 +98,8 @@ def write_test_data_to_files(datasets):
 
 
 def __create_data_set(jira_api):
+    ## Create issues if not existing
+    create_perf_issues(jira_api, spec_project)
     dataset = dict()
     dataset[USERS] = __get_users(jira_api)
     perf_user = random.choice(dataset[USERS])
@@ -103,8 +111,6 @@ def __create_data_set(jira_api):
     dataset[SCRUM_BOARDS] = __get_boards(perf_user_api, 'scrum')
     dataset[KANBAN_BOARDS] = __get_boards(perf_user_api, 'kanban')
     dataset[JQLS] = __generate_jqls(count=150)
-    ## Create issues
-    create_perf_issues(jira_api, spec_project)
     print(f'Users count: {len(dataset[USERS])}')
     print(f'Projects: {len(dataset[PROJECTS])}')
     print(f'Issues count: {len(dataset[ISSUES])}')
