@@ -42,7 +42,7 @@ def create_perf_issues(api, project):
         curr_issue = api.issues_search(jql=f"project = '{project}' AND status != Closed order by key", max_results=1000)
     except Exception as e:
         raise SystemExit(f"ERROR: Unable to fetch issues from project {project}, exiting.")
-    curr_issue_count = len(issues)
+    curr_issue_count = len(curr_issue)
     print(curr_issue_count)
 
 def generate_perf_users(cur_perf_user, api):
