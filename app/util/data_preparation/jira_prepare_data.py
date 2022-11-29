@@ -19,8 +19,8 @@ JQLS = "jqls"
 PROJECTS = "projects"
 CUSTOM_ISSUES = "custom_issues"
 
-DEFAULT_USER_PASSWORD = 'password'
-DEFAULT_USER_PREFIX = 'performance_'
+DEFAULT_USER_PASSWORD = 'password1234321'
+DEFAULT_USER_PREFIX = 'dptperformance_'
 ERROR_LIMIT = 10
 
 ENGLISH = 'en_US'
